@@ -21,7 +21,7 @@ public class PlayerDeath : MonoBehaviour
     public float finalScore = 0f;
     public TextMeshProUGUI finalText;
 
-
+    bool shieldActive = false;
     void Awake()
     {
         
@@ -34,14 +34,21 @@ public class PlayerDeath : MonoBehaviour
 
     void Update()
     {
-
+        if(Input.GetKey(KeyCode.Mouse1))
+        {
+            shieldActive = true;
+        }else
+        {
+            shieldActive = false;
+        }
     }
     
     void OnTriggerEnter2D(Collider2D target)
     {
-        if(target.tag == "Obstacle")
+        if(target.tag == "Obstacle" && !shieldActive)
         {
             target.gameObject.SetActive(false);
+            Debug.Log("Player hit");
             PlayerDied();
         }
         else if(target.tag == "OxygenTank")
